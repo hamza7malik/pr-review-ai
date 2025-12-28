@@ -2,6 +2,12 @@
 
 LLM-Powered GitHub Pull Request Review Assistant - A production-grade tool that analyzes GitHub pull requests using AI and provides structured, actionable code reviews.
 
+## 🎬 Demo
+
+https://github.com/hamza7malik/pr-review-ai/assets/demo.mp4
+
+> **Note**: If the video doesn't load above, you can [watch it here](./frontend/public/demo.mp4) or view it in the live application.
+
 ## 🚀 Overview
 
 This application allows users to:

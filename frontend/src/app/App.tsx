@@ -9,6 +9,11 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogCancel,
 } from "@/components/ui";
 import { ReviewResult } from "@/components/review";
 import {
@@ -16,12 +21,13 @@ import {
   prUrlSchema,
   useReviewStore,
 } from "@/features/review";
-import { Github, Loader2 } from "lucide-react";
+import { Loader2, PlayCircle, X } from "lucide-react";
 import { ZodError } from "zod";
 
 function App() {
   const { prUrl, setPrUrl } = useReviewStore();
   const [error, setError] = useState<string>("");
+  const [showDemo, setShowDemo] = useState<boolean>(false);
 
   const mutation = useMutation({
     mutationFn: reviewPullRequest,
@@ -48,8 +54,12 @@ function App() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
       <div className="container max-w-5xl mx-auto py-12 px-4">
         <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Github className="h-10 w-10" />
+          <div className="flex flex-col items-center justify-center mb-4">
+            <img
+              src="/logo.png"
+              alt="PR Review AI Logo"
+              className="h-16 w-16 mb-3"
+            />
             <h1 className="text-4xl font-bold tracking-tight">PR Review AI</h1>
           </div>
           <p className="text-lg text-muted-foreground">
@@ -58,10 +68,15 @@ function App() {
           <p className="text-sm text-muted-foreground mt-2">
             Paste a GitHub PR URL and get instant AI-powered code review
           </p>
-          <p className="text-xs text-amber-600 mt-2 font-medium">
-            ℹ️ Note: Currently supports public PRs only. Private repository
-            support coming soon!
-          </p>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowDemo(true)}
+            className="mt-4"
+          >
+            <PlayCircle className="mr-2 h-4 w-4" />
+            Watch Demo
+          </Button>
         </div>
 
         <Card className="mb-8">
@@ -98,6 +113,11 @@ function App() {
                 </Button>
               </div>
 
+              <p className="text-xs text-amber-600 font-medium">
+                ℹ️ Note: Currently supports public PRs only. Private repository
+                support coming soon!
+              </p>
+
               {error && (
                 <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-md p-3">
                   {error}
@@ -117,6 +137,24 @@ function App() {
           <ReviewResult review={mutation.data} />
         )}
       </div>
+
+      <AlertDialog open={showDemo} onOpenChange={setShowDemo}>
+        <AlertDialogContent className="max-w-4xl">
+          <AlertDialogHeader>
+            <AlertDialogTitle>PR Review AI Demo</AlertDialogTitle>
+            <AlertDialogCancel className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+              <X className="h-4 w-4" />
+              <span className="sr-only">Close</span>
+            </AlertDialogCancel>
+          </AlertDialogHeader>
+          <div className="aspect-video rounded-lg overflow-hidden bg-slate-900">
+            <video className="w-full h-full object-contain" controls autoPlay>
+              <source src="/demo.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
