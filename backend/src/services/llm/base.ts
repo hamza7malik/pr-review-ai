@@ -1,7 +1,7 @@
-import type { PrReviewResponse } from '../../types';
+import type { LlmReviewResponse } from '../../types';
 
 export interface LlmProvider {
-  reviewDiff(diff: string, prTitle: string): Promise<PrReviewResponse>;
+  reviewDiff(diff: string, prTitle: string): Promise<LlmReviewResponse>;
   getName(): string;
 }
 

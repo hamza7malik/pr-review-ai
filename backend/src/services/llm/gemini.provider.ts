@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { LlmProvider, SYSTEM_PROMPT, createUserPrompt } from './base';
-import type { PrReviewResponse } from '../../types';
+import type { LlmReviewResponse } from '../../types';
 import { logger } from '../../utils';
 
 export class GeminiProvider implements LlmProvider {
@@ -16,7 +16,7 @@ export class GeminiProvider implements LlmProvider {
     return 'Gemini';
   }
 
-  async reviewDiff(diff: string, prTitle: string): Promise<PrReviewResponse> {
+  async reviewDiff(diff: string, prTitle: string): Promise<LlmReviewResponse> {
     try {
       logger.info(`Sending diff to Gemini (${this.model}) for review`);
 
@@ -38,7 +38,7 @@ export class GeminiProvider implements LlmProvider {
         throw new Error('No response from Gemini');
       }
 
-      const parsed = JSON.parse(content) as PrReviewResponse;
+      const parsed = JSON.parse(content) as LlmReviewResponse;
 
       logger.info('Successfully received and parsed Gemini review');
 
@@ -60,7 +60,7 @@ export class GeminiProvider implements LlmProvider {
     }
   }
 
-  private normalizeResponse(parsed: PrReviewResponse): PrReviewResponse {
+  private normalizeResponse(parsed: LlmReviewResponse): LlmReviewResponse {
     return {
       summary: parsed.summary || '',
       high_risk_issues: parsed.high_risk_issues || [],

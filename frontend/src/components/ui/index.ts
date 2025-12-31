@@ -1,6 +1,7 @@
 // UI Components Barrel Export
 export { Button, buttonVariants } from "./button";
 export { Input } from "./input";
+export { Badge, badgeVariants } from "./badge";
 export {
   Card,
   CardHeader,
@@ -9,6 +10,18 @@ export {
   CardContent,
   CardFooter,
 } from "./card";
+export {
+  Dialog,
+  DialogPortal,
+  DialogOverlay,
+  DialogClose,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+} from "./dialog";
 export {
   Accordion,
   AccordionItem,

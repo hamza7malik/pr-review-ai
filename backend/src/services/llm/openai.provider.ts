@@ -1,6 +1,6 @@
 import OpenAI from 'openai';
 import { LlmProvider, SYSTEM_PROMPT, createUserPrompt } from './base';
-import type { PrReviewResponse } from '../../types';
+import type { LlmReviewResponse } from '../../types';
 import { logger } from '../../utils';
 
 export class OpenAiProvider implements LlmProvider {
@@ -16,7 +16,7 @@ export class OpenAiProvider implements LlmProvider {
     return 'OpenAI';
   }
 
-  async reviewDiff(diff: string, prTitle: string): Promise<PrReviewResponse> {
+  async reviewDiff(diff: string, prTitle: string): Promise<LlmReviewResponse> {
     try {
       logger.info(`Sending diff to OpenAI (${this.model}) for review`);
 
@@ -36,7 +36,7 @@ export class OpenAiProvider implements LlmProvider {
         throw new Error('No response from OpenAI');
       }
 
-      const parsed = JSON.parse(content) as PrReviewResponse;
+      const parsed = JSON.parse(content) as LlmReviewResponse;
 
       logger.info('Successfully received and parsed OpenAI review');
 
@@ -58,7 +58,7 @@ export class OpenAiProvider implements LlmProvider {
     }
   }
 
-  private normalizeResponse(parsed: PrReviewResponse): PrReviewResponse {
+  private normalizeResponse(parsed: LlmReviewResponse): LlmReviewResponse {
     return {
       summary: parsed.summary || '',
       high_risk_issues: parsed.high_risk_issues || [],
